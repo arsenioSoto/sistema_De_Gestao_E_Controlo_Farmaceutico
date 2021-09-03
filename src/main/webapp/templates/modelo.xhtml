@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pe="http://primefaces.org/ui/extensions"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Sistema de Vendas</title>
+	<h:outputStylesheet library="css" name="estilos.css" />
+	<h:outputScript library="js" name="scripts.js" /> <!-- chamndo o arquivo jAVA SCRIPT -->
+</h:head>
+<h:body>
+<div class="card">
+		<p:growl id="mensagem" />
+   
+    	<div id="geral">
+    		<div id="topo" class="divTopo">
+    			<h:outputText id="user" class="user" value="Ola, #{autenticacaoBean.usuarioLogado.pessoa.nome}." />
+    			<p:graphicImage library="imagens" name="img.jpg"
+    			styleClass="imagemCentralizada"/>
+    		</div>
+    	
+    	 <div id="cabecalho" class="divCabecalho">
+    	 <h:form id="formMenu">
+        <p:megaMenu orientation="horizontal" autoDisplay="false" class="navbar navbar-dropdown navbar-fixed-top navbar-expand-lg; container-fluid; navbar-brand" style="background-color: #5F9EA0;">
+            <p:submenu label="Arquivos" icon="pi pi-fw pi-video">
+                <p:column>
+                    <p:submenu  label="arquivos">
+                        
+                        <p:menuitem value="Sair" url="/Junior/pages/autenticar.xhtml"/>
+                         <p:menuitem value="Verificar Stock" url="/Junior/pages/historico.xhtml" />
+                         <p:menuitem value="Abrir Caixa" url="/Junior/pages/caixa.xhtml" />
+                         <p:menuitem value="Editar Produtos" url="/Junior/pages/produtosListagem.xhtml" />
+                    </p:submenu>
+                </p:column>
+            </p:submenu>
+						
+            <p:submenu label="Cadastros" icon="pi pi-fw pi-users">
+                <p:column>
+                    <p:submenu label="cadastros" rendered="#{autenticacaoBean.temPermissoes(['A', 'G'])}">
+                        
+                       <p:menuitem value="Estado" url="/Junior/pages/estados.xhtml" />
+						<p:menuitem value="Cidade" url="/Junior/pages/cidades.xhtml" />
+                        <p:menuitem value="Fabricante" url="/Junior/pages/fabricantes.xhtml" />
+                        <p:menuitem value="Produto" url="/Junior/pages/produtos.xhtml" />
+                        <p:menuitem value="Pessoa"  url="/Junior/pages/pessoas.xhtml" />
+                        <p:menuitem value="Cliente" url="/Junior/pages/clientes.xhtml" />
+                        <p:menuitem value="Perfil"  url="/Junior/pages/perfil.xhtml " />
+                        <p:menuitem value="Usuario"  url="/Junior/pages/usuarios.xhtml" />
+                        <p:menuitem value="Funcionario" url="/Junior/pages/funcionarios.xhtml" />
+                    </p:submenu>
+                </p:column>
+            </p:submenu>
+
+            <p:submenu label="Movimentacoes" icon="pi pi-fw pi-calendar">
+                <p:column>
+                    <p:submenu label="movimentacoes" rendered="#{autenticacaoBean.temPermissoes(['A', 'G', 'B'])}">
+                        
+                        <p:menuitem value="Venda" url="/Junior/pages/vendas.xhtml" />
+                        <p:menuitem value="Listagem de Vendas" url="/Junior/pages/vendasListagem.xhtml"/>
+                    </p:submenu>                 
+                </p:column>
+            </p:submenu>
+            
+
+            <p:submenu label="Ajuda" icon="pi pi-fw pi-cog">
+                <p:column>
+                    <p:submenu label="ajuda">
+                        
+                        <p:menuitem value="Sobre"/>
+                        <p:menuitem value="Setting 1.2"/>
+                    </p:submenu>                 
+                </p:column>
+            </p:submenu>
+        </p:megaMenu>
+        
+         </h:form>
+        </div>
+        
+        
+         <div id="conteudo">
+        	<ui:insert name="conteudo"/>
+        	
+        </div>
+
+
+
+        </div>
+   
+</div>
+</h:body>
+</html>

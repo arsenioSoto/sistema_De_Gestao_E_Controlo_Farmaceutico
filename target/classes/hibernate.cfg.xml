@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<!-- Configuracao do hibernate iniciando -->
+<hibernate-configuration>
+
+	<session-factory>
+	<!-- parete de sensao e uma poarte de hibernat especializado em cria sensoe
+	requesicao etc.. -->
+	
+		<!-- Configurações de Conexão com o Banco de Dados -->
+		<property name="connection.driver_class">com.mysql.jdbc.Driver</property> <!-- Classe que serve para indicar o driver  -->
+		<property name="connection.url">jdbc:mysql://127.0.0.1:3306/junior</property> <!-- classe para insercao dos parametros referentes ao banco de dados e o servidor, tipo de conecao, qual e o banco, o ip, a porta, e o nome do banco  -->
+		<property name="connection.username">root</property> <!-- nome do usuario de banco ou de server  -->
+		<property name="connection.password"></property> <!-- Senha do bancpo ou server  -->
+
+		<!-- Pool de Conexões -->
+		<property name="connection.pool_size">1</property>
+
+		<!-- SQL dialect, essa tag serve para indicar a linguagem do banco de dados que sera usado -->
+		<property name="dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
+
+		<!-- Gerenciamento do Contexto das Sessões -->
+		<property name="current_session_context_class">thread</property>
+
+		<!-- Cache de Segundo Nível -->
+		<property name="cache.provider_class">org.hibernate.cache.internal.NoCacheProvider</property>
+
+		<!-- Mostra as SQLs Geradas -->
+		<property name="show_sql">true</property>
+
+		<!-- Cria as tabelas do banco de dados -->
+					<!-- create , update, validate  -->
+		<property name="hbm2ddl.auto">update</property>
+		
+		<!-- Mapeando as entidades -->
+		<mapping class="mz.com.soto.junior.domain.Cidade"/>
+		<mapping class="mz.com.soto.junior.domain.Cliente"/>
+		<mapping class="mz.com.soto.junior.domain.Estado"/>
+		<mapping class="mz.com.soto.junior.domain.Fabricante"/>
+		<mapping class="mz.com.soto.junior.domain.Funcionario"/>
+		<mapping class="mz.com.soto.junior.domain.ItemVenda"/>
+		<mapping class="mz.com.soto.junior.domain.Perfil"/>
+		<mapping class="mz.com.soto.junior.domain.Produto"/>
+		<mapping class="mz.com.soto.junior.domain.Pessoa"/>
+		<mapping class="mz.com.soto.junior.domain.Usuario"/>
+		<mapping class="mz.com.soto.junior.domain.Venda"/>
+		<mapping class="mz.com.soto.junior.domain.Historico"/>
+		<mapping class="mz.com.soto.junior.domain.Caixa"/>
+		<mapping class="mz.com.soto.junior.domain.Movimentacao"/>
+	</session-factory>
+
+</hibernate-configuration>

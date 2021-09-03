@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/templates/modelo.xhtml">
+	<ui:define name="conteudo">
+	
+	<h:form id="formListagem">
+		<p:panel header="Listagem de Perfils">
+			<p:dataTable id="tabela" emptyMessage="Nenhum Registro encontrado."
+				paginatorPosition="bottom" paginator="true" value="#{perfilBean.perfils}" var="perfil" rows="4">
+				
+					<f:facet name="header">
+						<center><p:commandButton title="Clique para Adicionar" style="background-color: #00FF00; transition: 3s all; border-radius: 15px; border: none; cursor: pointer; houver: transform: rotate(70deg) scale(1.2); " value="Novo" oncomplete="PF('dialogo').show();"
+							actionListener="#{perfilBean.novo}" 
+							update=":formCadastro:painel"/></center>
+					</f:facet>
+
+				<p:column headerText="Codigo" sortBy="#{perfil.codigo}" filterBy="#{perfil.codigo}">
+					<h:outputText value="#{perfil.codigo}" />
+				</p:column>
+	
+	
+				<p:column headerText="Cargo" sortBy="#{perfil.perfil}" filterBy="#{perfil.perfil}">
+					<h:outputText value="#{perfil.perfil}" />
+				</p:column>
+	
+	
+	
+	
+				<p:column headerText="Opcoes">
+									<!-- icon=ui-icon-trash -->
+					<p:commandButton value="excluir" style="background-color: #FF0000;"
+						actionListener="#{perfilBean.excluir}"
+						update=":mensagem :formListagem:tabela">
+						<p:confirm header="Confirmação" message="Deseja excluir o perfil?"
+							icon="ui-icon-alert" />
+
+						<f:attribute name="perfilSelecionado" value="#{perfil}" />
+					</p:commandButton>
+						<!-- icon=ui-icon-pencil -->
+					<p:commandButton value="editar" style="background-color: #0000FF;" actionListener="#{perfilBean.editar}"
+					 update=":mensagem :formCadastro:painel" oncomplete="PF('dialogo').show();">
+						<f:attribute name="perfilSelecionado" value="#{perfil}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+			
+			<p:confirmDialog global="true">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		
+	</p:panel>	
+   </h:form>
+   
+   <p:dialog header="Cadastro de perfil" widgetVar="dialogo"
+   		draggable="false" resizable="false" modal="true">	
+   		<h:form id="formCadastro">
+   		
+   		<h:panelGrid id="painel" columns="2">
+   			<p:outputLabel value="Cargo: " />
+   			<p:inputText maxlength="50" size="40" value="#{perfilBean.perfil.perfil}" converter="upperCaseConverter" >
+						<p:ajax event="blur" update="@this"/>
+					</p:inputText>
+   		
+   		</h:panelGrid>
+   		
+   		<h:panelGrid columns="2">
+   			<p:commandButton title="Clique para Salvar" style="background-color: #B0E0E6;" value="Salvar" actionListener="#{perfilBean.salvar()}"
+   				update=":mensagem :formCadastro:painel :formListagem:tabela"/>
+   			<p:commandButton title="Clique para Fechar" style="background-color: #FF8C00;" value="Fechar" oncomplete="PF('dialogo').hide();"/>
+   		</h:panelGrid>
+   		
+   		</h:form>
+   </p:dialog>
+</ui:define>
+</ui:composition>

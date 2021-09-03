@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/templates/modelo.xhtml">
+	<ui:define name="conteudo">
+	
+	
+	<h:form id="formListagem">
+		<p:panel header="Listagem de Cidades">
+			<p:dataTable id="tabela" emptyMessage="Nenhum Registro encontrado."
+				paginatorPosition="bottom" paginator="true" value="#{cidadeBean.cidades}" var="cidade" rows="4">
+
+				<f:facet name="header">
+					<center>
+						<p:commandButton title="Clique para Adicionar" style="background-color: #00FF00;" value="Novo"
+							actionListener="#{cidadeBean.novo}"
+							update=":mensagem :formCadastro:painel"
+							oncomplete="PF('dialogo').show();" >
+							<f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+							</p:commandButton>
+					</center>
+				</f:facet>
+
+				<p:column headerText="Codigo" filterBy="#{cidade.codigo}"
+					sortBy="#{cidade.codigo}">
+					<h:outputText value="#{cidade.codigo}" />
+				</p:column>
+
+
+				<p:column headerText="Nome" filterBy="#{cidade.nome}"
+					sortBy="#{cidade.nome}">
+					<h:outputText value="#{cidade.nome}" />
+				</p:column>
+
+
+				<p:column headerText="Estado" filterBy="#{cidade.estado.nome}"
+					sortBy="#{cidade.estado.nome}">
+					<h:outputText value="#{cidade.estado.nome}" />
+					<h:outputText value=" - " />
+					<h:outputText value="#{cidade.estado.sigla}" />
+				</p:column>
+
+
+				<p:column headerText="Opcoes">
+					<!-- icon=ui-icon-trash -->
+					<p:commandButton value="excluir" style="background-color: #FF0000;"
+						actionListener="#{cidadeBean.excluir}"
+						update=":mensagem :formListagem:tabela">
+						<p:confirm header="Confirmação" message="Deseja excluir a cidade?"
+							icon="ui-icon-alert" />
+						<f:attribute name="cidadeSelecionada" value="#{cidade}" />
+					</p:commandButton>
+					
+					<!-- icon=ui-icon-pencil -->
+					<p:commandButton value="editar" style="background-color: #0000FF;"
+						actionListener="#{cidadeBean.editar}"
+						update=":mensagem :formCadastro:painel"
+						oncomplete="PF('dialogo').show();">
+						<f:attribute name="cidadeSelecionada" value="#{cidade}" />
+						<f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+
+			<p:confirmDialog global="true">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</p:panel>
+	</h:form>
+
+	<p:dialog header="Cadastro de Cidades" widgetVar="dialogo"
+		draggable="false" resizable="false" modal="true">
+		<h:form id="formCadastro">
+
+			<h:panelGrid id="painel" columns="2">
+				<p:outputLabel for="nome" value="Nome: " />
+				<p:inputText id="nome" maxlength="50" size="40"
+					value="#{cidadeBean.cidade.nome}" required="true" requiredMessage="O campo 'nome' e obrigatorio"  converter="upperCaseConverter" >
+						<p:ajax event="blur" update="@this"/>
+					</p:inputText>
+					
+
+				<p:outputLabel for="estado" value="Estado: " />
+				<p:selectOneMenu id="estado" filter="true" value="#{cidadeBean.cidade.estado}"
+					converter="omnifaces.SelectItemsConverter"
+					required="true" requiredMessage="O campo 'Estado' e obrigatorio">
+					<f:selectItem noSelectionOption="true"
+						itemLabel="Selecione um Estado" />
+					<f:selectItems value="#{cidadeBean.estados}" var="estado"
+						itemValue="#{estado}" itemLabel="#{estado.nome} - #{estado.sigla}" />
+
+				</p:selectOneMenu>
+			</h:panelGrid>
+
+			<h:panelGrid columns="2">
+				<p:commandButton title="Clique para Salvar" style="background-color: #B0E0E6;" value="Salvar"
+					actionListener="#{cidadeBean.salvar}"
+					update=":mensagem :formCadastro:painel :formListagem:tabela" />
+				<p:commandButton title="Clique para Fechar" style="background-color: #FF8C00;" value="Fechar"
+					oncomplete="PF('dialogo').hide();" />
+			</h:panelGrid>
+
+		</h:form>
+	</p:dialog>
+</ui:define>
+</ui:composition>

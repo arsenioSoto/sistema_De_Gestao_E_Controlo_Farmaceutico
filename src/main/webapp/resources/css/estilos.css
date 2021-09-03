@@ -1,0 +1,27 @@
+@CHARSET "UTF-8";
+
+.imagemCentralizada {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.divTopo {
+	padding-bottom: 5px;
+}
+
+.divCabecalho {
+	padding-bottom: 4px;
+}
+
+.ui-widget, .ui-widget .ui-widget {
+	font-size: 90% !important;
+}
+
+.conteudo {
+	float: center;
+	height:100%;
+	width:10%;
+	background-color: rgb(255, 0, 0);
+	color: rgb(255, 255, 0);
+}
